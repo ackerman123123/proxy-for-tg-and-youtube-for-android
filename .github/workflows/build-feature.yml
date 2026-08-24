@@ -1,0 +1,70 @@
+name: Build YouTube proxy feature
+
+on:
+  push:
+    branches: [feature/youtube-proxy]
+    paths-ignore:
+      - 'ci/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/youtube-proxy
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install Android native toolchain
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.1.0'
+
+      - name: Build universal debug APK
+        id: build
+        shell: bash
+        run: |
+          rm -f local.properties
+          set +e
+          gradle :app:assembleUniversalDebug --stacktrace 2>&1 | tee /tmp/build.log
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Save build result
+        run: |
+          mkdir -p ci
+          {
+            echo "Build commit: $GITHUB_SHA"
+            echo "Exit code: ${{ steps.build.outputs.exit_code }}"
+            echo
+            echo "===== LAST 350 LINES ====="
+            tail -n 350 /tmp/build.log
+          } > ci/last-build.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ci/last-build.txt
+          git commit -m 'CI: record YouTube proxy build result' || true
+          git push origin feature/youtube-proxy
+
+      - name: Upload APK
+        if: steps.build.outputs.exit_code == '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-proxy-universal-debug
+          path: app/build/outputs/apk/universal/debug/*.apk
