@@ -1,0 +1,45 @@
+name: Import upstream base
+
+on:
+  push:
+    paths:
+      - '.github/workflows/import-upstream.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message != 'Import tg-ws-proxy-android base'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone upstream source
+        run: |
+          git clone --depth 1 https://github.com/amurcanov/tg-ws-proxy-android.git /tmp/upstream
+
+      - name: Copy upstream project
+        run: |
+          rsync -a --delete \
+            --exclude '.git' \
+            --exclude '.github/workflows/import-upstream.yml' \
+            /tmp/upstream/ ./
+          mkdir -p .github/workflows
+          git checkout -- .github/workflows/import-upstream.yml
+
+      - name: Commit imported base
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No changes to import.'
+            exit 0
+          fi
+          git commit -m 'Import tg-ws-proxy-android base'
+          git push
