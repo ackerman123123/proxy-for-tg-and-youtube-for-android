@@ -1,1 +1,1 @@
-# proxy-for-tg-and-youtube-for-android
+# proxy-for-tg-and-youtube-android
