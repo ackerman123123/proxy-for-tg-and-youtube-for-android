@@ -84,6 +84,14 @@
         </service>
 
         <service
+            android:name="com.amurcanov.tgwsproxy.WireGuardStatusService"
+            android:exported="false"
+            android:stopWithTask="false"
+            android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="YouTube WireGuard tunnel status" />
+        </service>
+
+        <service
             android:name="com.amurcanov.tgwsproxy.ProxyTileService"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true"

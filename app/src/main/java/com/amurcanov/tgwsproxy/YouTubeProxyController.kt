@@ -3,10 +3,12 @@ package com.amurcanov.tgwsproxy
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.delay
 
-/** Starts or restarts the YouTube-only foreground VPN with an immutable request. */
+/** Starts or restarts the YouTube-only foreground SOCKS5 VPN with an immutable request. */
 object YouTubeProxyController {
-    fun start(context: Context, host: String, port: Int, username: String, password: String) {
+    suspend fun start(context: Context, host: String, port: Int, username: String, password: String) {
+        WireGuardYouTubeController.stop(context)
         ContextCompat.startForegroundService(
             context,
             Intent(context, YouTubeVpnService::class.java).apply {
@@ -25,5 +27,14 @@ object YouTubeProxyController {
                 action = YouTubeVpnService.ACTION_STOP
             }
         )
+    }
+
+    suspend fun stopAndAwait(context: Context) {
+        if (!YouTubeVpnService.isRunning.value) return
+        stop(context)
+        repeat(20) {
+            if (!YouTubeVpnService.isRunning.value) return
+            delay(100)
+        }
     }
 }

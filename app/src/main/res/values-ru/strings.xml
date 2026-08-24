@@ -144,4 +144,19 @@
     <string name="youtube_proxy_not_installed">Официальное приложение YouTube не установлено</string>
     <string name="youtube_proxy_channel">YouTube Proxy</string>
     <string name="youtube_proxy_notification">YouTube трафик направляется через SOCKS5</string>
+
+    <string name="youtube_route_socks5">SOCKS5</string>
+    <string name="youtube_route_wireguard">WireGuard</string>
+    <string name="youtube_wireguard_title">Туннель WireGuard</string>
+    <string name="youtube_wireguard_import">Импортировать .conf</string>
+    <string name="youtube_wireguard_profile">Профиль: %1$s</string>
+    <string name="youtube_wireguard_no_profile">Профиль не импортирован</string>
+    <string name="youtube_wireguard_delete">Удалить профиль</string>
+    <string name="youtube_wireguard_storage">Конфигурация хранится только в закрытом хранилище приложения и не попадает в APK.</string>
+    <string name="youtube_wireguard_only_youtube">Импортированная конфигурация автоматически ограничивается только YouTube.</string>
+    <string name="youtube_wireguard_imported">Профиль WireGuard импортирован</string>
+    <string name="youtube_wireguard_invalid">Этот файл не является поддерживаемым профилем WireGuard</string>
+    <string name="youtube_wireguard_channel">YouTube WireGuard</string>
+    <string name="youtube_wireguard_notification">Трафик YouTube направляется через WireGuard</string>
+    <string name="youtube_wireguard_disconnected">Туннель WireGuard отключён</string>
 </resources>

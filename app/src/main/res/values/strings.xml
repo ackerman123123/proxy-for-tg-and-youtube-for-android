@@ -144,4 +144,19 @@
     <string name="youtube_proxy_not_installed">Official YouTube app is not installed</string>
     <string name="youtube_proxy_channel">YouTube Proxy</string>
     <string name="youtube_proxy_notification">YouTube traffic is routed through SOCKS5</string>
+
+    <string name="youtube_route_socks5">SOCKS5</string>
+    <string name="youtube_route_wireguard">WireGuard</string>
+    <string name="youtube_wireguard_title">WireGuard tunnel</string>
+    <string name="youtube_wireguard_import">Import .conf</string>
+    <string name="youtube_wireguard_profile">Profile: %1$s</string>
+    <string name="youtube_wireguard_no_profile">No profile imported</string>
+    <string name="youtube_wireguard_delete">Delete profile</string>
+    <string name="youtube_wireguard_storage">The configuration is stored only in the app’s private storage and is not included in the APK.</string>
+    <string name="youtube_wireguard_only_youtube">The imported configuration is automatically limited to YouTube.</string>
+    <string name="youtube_wireguard_imported">WireGuard profile imported</string>
+    <string name="youtube_wireguard_invalid">This file is not a supported WireGuard profile</string>
+    <string name="youtube_wireguard_channel">YouTube WireGuard</string>
+    <string name="youtube_wireguard_notification">YouTube traffic is routed through WireGuard</string>
+    <string name="youtube_wireguard_disconnected">WireGuard tunnel disconnected</string>
 </resources>
