@@ -24,6 +24,8 @@ android {
             ndkBuild {
                 arguments += "NDK_APPLICATION_MK=" +
                     rootProject.file("third_party/hev-socks5-tunnel/Application.mk").absolutePath
+                // Keep the native library compatible with the app’s minSdk 21 universal APK.
+                arguments += "APP_PLATFORM=android-21"
             }
         }
     }
