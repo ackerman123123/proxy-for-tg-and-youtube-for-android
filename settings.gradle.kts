@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TgWsProxy"
 include(":app")
+include(":hevTunnel")
+project(":hevTunnel").projectDir = file("third_party/hev-socks5-tunnel-android/library")

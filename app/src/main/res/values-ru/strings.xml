@@ -127,4 +127,21 @@
     <string name="interval_never">Никогда</string>
     <string name="interval_hours">%1$d ч</string>
     <string name="port_is_not_available">"Порт %1$d используется, пожалуйста попробуйте другой "</string>
+
+    <string name="nav_telegram">Telegram</string>
+    <string name="nav_youtube">YouTube</string>
+    <string name="youtube_proxy_title">YouTube Proxy</string>
+    <string name="youtube_proxy_subtitle">SOCKS5 VPN только для приложения YouTube</string>
+    <string name="youtube_proxy_host">SOCKS5 сервер</string>
+    <string name="youtube_proxy_port">Порт</string>
+    <string name="youtube_proxy_username">Логин (необязательно)</string>
+    <string name="youtube_proxy_password">Пароль (необязательно)</string>
+    <string name="youtube_proxy_connect">Подключить</string>
+    <string name="youtube_proxy_disconnect">Отключить</string>
+    <string name="youtube_proxy_open">Открыть YouTube</string>
+    <string name="youtube_proxy_only_youtube">Через VPN проходит только com.google.android.youtube</string>
+    <string name="youtube_proxy_invalid">Укажи сервер и корректный порт</string>
+    <string name="youtube_proxy_not_installed">Официальное приложение YouTube не установлено</string>
+    <string name="youtube_proxy_channel">YouTube Proxy</string>
+    <string name="youtube_proxy_notification">YouTube трафик направляется через SOCKS5</string>
 </resources>

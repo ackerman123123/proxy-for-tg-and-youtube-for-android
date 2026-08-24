@@ -127,4 +127,21 @@
     <string name="interval_never">Never</string>
     <string name="interval_hours">%1$d h</string>
     <string name="port_is_not_available">Port %1$d is in use, please try another one</string>
+
+    <string name="nav_telegram">Telegram</string>
+    <string name="nav_youtube">YouTube</string>
+    <string name="youtube_proxy_title">YouTube Proxy</string>
+    <string name="youtube_proxy_subtitle">SOCKS5 VPN only for the YouTube app</string>
+    <string name="youtube_proxy_host">SOCKS5 server</string>
+    <string name="youtube_proxy_port">Port</string>
+    <string name="youtube_proxy_username">Username (optional)</string>
+    <string name="youtube_proxy_password">Password (optional)</string>
+    <string name="youtube_proxy_connect">Connect</string>
+    <string name="youtube_proxy_disconnect">Disconnect</string>
+    <string name="youtube_proxy_open">Open YouTube</string>
+    <string name="youtube_proxy_only_youtube">Only com.google.android.youtube is routed through the VPN</string>
+    <string name="youtube_proxy_invalid">Enter a server and a valid port</string>
+    <string name="youtube_proxy_not_installed">Official YouTube app is not installed</string>
+    <string name="youtube_proxy_channel">YouTube Proxy</string>
+    <string name="youtube_proxy_notification">YouTube traffic is routed through SOCKS5</string>
 </resources>

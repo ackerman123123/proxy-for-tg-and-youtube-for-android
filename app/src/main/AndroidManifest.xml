@@ -11,6 +11,7 @@
 
     <queries>
         <package android:name="org.telegram.messenger" />
+        <package android:name="com.google.android.youtube" />
         <package android:name="com.radolyn.ayugram" />
         <package android:name="com.exteragram.messenger" />
         <package android:name="org.telegram.plus" />
@@ -68,6 +69,18 @@
             android:stopWithTask="false"
             android:foregroundServiceType="specialUse">
             <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="Proxy Server" />
+        </service>
+
+        <service
+            android:name="com.amurcanov.tgwsproxy.YouTubeVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false"
+            android:stopWithTask="false"
+            android:foregroundServiceType="specialUse">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="YouTube SOCKS5 VPN" />
         </service>
 
         <service

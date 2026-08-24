@@ -32,6 +32,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PowerSettingsNew
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.*
@@ -58,6 +59,7 @@ import com.amurcanov.tgwsproxy.ui.FloatingToolbar
 import com.amurcanov.tgwsproxy.ui.InfoTab
 import com.amurcanov.tgwsproxy.ui.LogsTab
 import com.amurcanov.tgwsproxy.ui.SettingsTab
+import com.amurcanov.tgwsproxy.ui.YouTubeProxyTab
 import com.amurcanov.tgwsproxy.ui.TgWsProxyTheme
 import com.amurcanov.tgwsproxy.ui.openUrlInBrowser
 import kotlinx.coroutines.CoroutineScope
@@ -185,7 +187,8 @@ fun MainContent(settingsStore: SettingsStore) {
     val currentUpdatePostponeUntil by rememberUpdatedState(updatePostponeUntil)
     val currentUpdatePostponeVersion by rememberUpdatedState(updatePostponeVersion)
     val navItems = listOf(
-        NavItem(stringResource(R.string.nav_proxy), Icons.Default.PowerSettingsNew),
+        NavItem(stringResource(R.string.nav_telegram), Icons.Default.PowerSettingsNew),
+        NavItem(stringResource(R.string.nav_youtube), Icons.Default.PlayCircle),
         NavItem(stringResource(R.string.settings), Icons.Default.Settings),
         NavItem(stringResource(R.string.nav_logs), Icons.Default.Terminal),
         NavItem(stringResource(R.string.info), Icons.Default.Info)
@@ -301,9 +304,10 @@ fun MainContent(settingsStore: SettingsStore) {
             ) { page ->
                 when (page) {
                     0 -> ConnectionTab(settingsStore)
-                    1 -> SettingsTab(settingsStore)
-                    2 -> LogsTab(settingsStore)
-                    3 -> InfoTab(settingsStore)
+                    1 -> YouTubeProxyTab(settingsStore)
+                    2 -> SettingsTab(settingsStore)
+                    3 -> LogsTab(settingsStore)
+                    4 -> InfoTab(settingsStore)
                 }
             }
 

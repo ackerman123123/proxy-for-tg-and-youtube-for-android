@@ -41,6 +41,10 @@ class SettingsStore(private val context: Context) {
         val CUSTOM_CF_DOMAIN = stringPreferencesKey("custom_cf_domain")
         val AUTO_START_ON_BOOT = booleanPreferencesKey("auto_start_on_boot")
         val SECRET_KEY = stringPreferencesKey("secret_key")
+        val YOUTUBE_PROXY_HOST = stringPreferencesKey("youtube_proxy_host")
+        val YOUTUBE_PROXY_PORT = stringPreferencesKey("youtube_proxy_port")
+        val YOUTUBE_PROXY_USERNAME = stringPreferencesKey("youtube_proxy_username")
+        val YOUTUBE_PROXY_PASSWORD = stringPreferencesKey("youtube_proxy_password")
         val LOG_SHOW_DEBUG = booleanPreferencesKey("log_show_debug")
         val LOG_SHOW_INFO = booleanPreferencesKey("log_show_info")
         val LOG_SHOW_ERROR = booleanPreferencesKey("log_show_error")
@@ -87,6 +91,10 @@ class SettingsStore(private val context: Context) {
     val customCfDomain: Flow<String> = context.dataStore.data.map { it[Keys.CUSTOM_CF_DOMAIN] ?: "" }
     val autoStartOnBoot: Flow<Boolean> = context.dataStore.data.map { it[Keys.AUTO_START_ON_BOOT] ?: false }
     val secretKey: Flow<String> = context.dataStore.data.map { it[Keys.SECRET_KEY] ?: "" }
+    val youtubeProxyHost: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_HOST] ?: "" }
+    val youtubeProxyPort: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_PORT] ?: "1080" }
+    val youtubeProxyUsername: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_USERNAME] ?: "" }
+    val youtubeProxyPassword: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_PASSWORD] ?: "" }
 
     val logShowDebug: Flow<Boolean> = context.dataStore.data.map { it[Keys.LOG_SHOW_DEBUG] ?: false }
     val logShowInfo: Flow<Boolean> = context.dataStore.data.map { it[Keys.LOG_SHOW_INFO] ?: DEFAULT_LOG_SHOW_INFO }
@@ -166,6 +174,15 @@ class SettingsStore(private val context: Context) {
             it[Keys.UPDATE_DIALOG_LAST_ACTION_VERSION] = version
             it[Keys.UPDATE_DIALOG_LAST_ACTION] = action
             it[Keys.UPDATE_DIALOG_LAST_ACTION_AT] = actedAt
+        }
+    }
+
+    suspend fun saveYouTubeProxySettings(host: String, port: String, username: String, password: String) {
+        context.dataStore.edit {
+            it[Keys.YOUTUBE_PROXY_HOST] = host.trim()
+            it[Keys.YOUTUBE_PROXY_PORT] = port.trim()
+            it[Keys.YOUTUBE_PROXY_USERNAME] = username
+            it[Keys.YOUTUBE_PROXY_PASSWORD] = password
         }
     }
 
