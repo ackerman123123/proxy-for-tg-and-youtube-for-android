@@ -18,6 +18,7 @@ jobs:
         with:
           ref: feature/youtube-proxy
           fetch-depth: 0
+          submodules: recursive
 
       - uses: actions/setup-java@v4
         with:
@@ -29,7 +30,7 @@ jobs:
       - name: Install Android native toolchain
         run: |
           yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973'
 
       - uses: gradle/actions/setup-gradle@v4
         with:

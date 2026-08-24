@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
 
+/** Starts or restarts the YouTube-only foreground VPN with an immutable request. */
 object YouTubeProxyController {
     fun start(context: Context, host: String, port: Int, username: String, password: String) {
         ContextCompat.startForegroundService(
