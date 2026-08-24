@@ -1,4 +1,4 @@
-Build commit: eb218231081ec05105c611a364e82b5b9003b86f
+Build commit: fdf2e06d57990d75990e006150e7d14d505fa2bc
 Exit code: 0
 
 ===== LAST 350 LINES =====
@@ -16,15 +16,15 @@ Starting a Gradle Daemon (subsequent builds will be faster)
 Calculating task graph as no cached configuration is available for tasks: :app:assembleUniversalDebug
 
 > Configure project :app
-w: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/build.gradle.kts:136:21: 'fun srcDirs(vararg srcDirs: Any): Any' is deprecated. Use `directories` mutable set instead.
+w: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/build.gradle.kts:137:21: 'fun srcDirs(vararg srcDirs: Any): Any' is deprecated. Use `directories` mutable set instead.
 WARNING: Keystore not found, using debug signing
 WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
 [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
 WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
 [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
 
-> Task :app:preBuild UP-TO-DATE
 > Task :app:generateUniversalDebugAssets UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
 > Task :app:preUniversalDebugBuild UP-TO-DATE
 > Task :app:mergeUniversalDebugNativeDebugMetadata NO-SOURCE
 > Task :app:generateUniversalDebugResources
@@ -35,35 +35,36 @@ WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Begi
 > Task :app:mergeUniversalDebugAssets
 > Task :app:compressUniversalDebugAssets
 > Task :app:checkUniversalDebugDuplicateClasses
-> Task :app:checkUniversalDebugAarMetadata
 > Task :app:mergeLibDexUniversalDebug
+> Task :app:checkUniversalDebugAarMetadata
 > Task :app:compileUniversalDebugNavigationResources
+> Task :app:parseUniversalDebugLocalResources
 > Task :app:mapUniversalDebugSourceSetPaths
+> Task :app:generateUniversalDebugRFile
+> Task :app:desugarUniversalDebugFileDependencies
+> Task :app:l8DexDesugarLibUniversalDebug
+> Task :app:mergeUniversalDebugResources
+> Task :app:compileUniversalDebugKotlin
+> Task :app:mergeExtDexUniversalDebug
 > Task :app:createUniversalDebugCompatibleScreenManifests
 > Task :app:extractDeepLinksUniversalDebug
-> Task :app:parseUniversalDebugLocalResources
-> Task :app:processUniversalDebugMainManifest
-> Task :app:generateUniversalDebugRFile
-> Task :app:processUniversalDebugManifest
-> Task :app:processUniversalDebugManifestForPackage
-> Task :app:mergeUniversalDebugResources
 > Task :app:configureNdkBuildDebug[arm64-v8a]
-> Task :app:desugarUniversalDebugFileDependencies
 > Task :app:buildNdkBuildDebug[arm64-v8a]
 > Task :app:configureNdkBuildDebug[armeabi-v7a]
-> Task :app:compileUniversalDebugKotlin
-> Task :app:processUniversalDebugResources
-> Task :app:mergeExtDexUniversalDebug
+> Task :app:processUniversalDebugMainManifest
 > Task :app:buildNdkBuildDebug[armeabi-v7a]
 > Task :app:mergeUniversalDebugJniLibFolders
+> Task :app:processUniversalDebugManifest
 > Task :app:mergeUniversalDebugNativeLibs
-> Task :app:validateSigningUniversalDebug
-> Task :app:writeUniversalDebugAppMetadata
-> Task :app:writeUniversalDebugSigningConfigVersions
+> Task :app:processUniversalDebugManifestForPackage
 
 > Task :app:stripUniversalDebugDebugSymbols
 Unable to strip the following libraries, packaging them as they are: libjnidispatch.so. Run with --info option to learn more.
 
+> Task :app:validateSigningUniversalDebug
+> Task :app:writeUniversalDebugAppMetadata
+> Task :app:writeUniversalDebugSigningConfigVersions
+> Task :app:processUniversalDebugResources
 > Task :app:processUniversalDebugJavaRes
 > Task :app:mergeUniversalDebugJavaResource
 > Task :app:compileUniversalDebugJavaWithJavac
@@ -73,8 +74,8 @@ Unable to strip the following libraries, packaging them as they are: libjnidispa
 > Task :app:packageUniversalDebug
 > Task :app:assembleUniversalDebug
 > Task :app:createUniversalDebugApkListingFileRedirect
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1787565887538.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1787567611256.json
 
-BUILD SUCCESSFUL in 3m 15s
-42 actionable tasks: 42 executed
+BUILD SUCCESSFUL in 3m 32s
+43 actionable tasks: 43 executed
 Configuration cache entry stored.
