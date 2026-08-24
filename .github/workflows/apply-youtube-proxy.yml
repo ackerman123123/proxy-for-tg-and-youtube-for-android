@@ -1,0 +1,507 @@
+name: Apply YouTube proxy integration
+
+on:
+  push:
+    branches: [feature/youtube-proxy]
+    paths:
+      - '.github/workflows/apply-youtube-proxy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/youtube-proxy
+          fetch-depth: 0
+
+      - name: Vendor hev-socks5-tunnel Android wrapper
+        run: |
+          rm -rf /tmp/hev-android third_party/hev-socks5-tunnel-android
+          git clone --depth 1 https://github.com/zak20090/hev-socks5-tunnel-android.git /tmp/hev-android
+          mkdir -p third_party/hev-socks5-tunnel-android
+          cp -a /tmp/hev-android/library third_party/hev-socks5-tunnel-android/
+          cp /tmp/hev-android/LICENSE third_party/hev-socks5-tunnel-android/LICENSE
+
+      - name: Patch Gradle, navigation, settings and manifest
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new):
+              p = Path(path)
+              s = p.read_text()
+              if old not in s:
+                  raise SystemExit(f'Anchor not found in {path}: {old[:80]!r}')
+              p.write_text(s.replace(old, new, 1))
+
+          replace('build.gradle.kts',
+              'id("com.android.application") version "9.0.1" apply false\n',
+              'id("com.android.application") version "9.0.1" apply false\n    id("com.android.library") version "9.0.1" apply false\n')
+
+          replace('settings.gradle.kts',
+              'include(":app")\n',
+              'include(":app")\ninclude(":hevTunnel")\nproject(":hevTunnel").projectDir = file("third_party/hev-socks5-tunnel-android/library")\n')
+
+          replace('app/build.gradle.kts',
+              'dependencies {\n',
+              'dependencies {\n    implementation(project(":hevTunnel"))\n')
+
+          p = Path('app/src/main/java/com/amurcanov/tgwsproxy/MainActivity.kt')
+          s = p.read_text()
+          s = s.replace('import androidx.compose.material.icons.filled.PowerSettingsNew\n',
+                        'import androidx.compose.material.icons.filled.PowerSettingsNew\nimport androidx.compose.material.icons.filled.PlayCircle\n')
+          s = s.replace('import com.amurcanov.tgwsproxy.ui.SettingsTab\n',
+                        'import com.amurcanov.tgwsproxy.ui.SettingsTab\nimport com.amurcanov.tgwsproxy.ui.YouTubeProxyTab\n')
+          s = s.replace('''    val navItems = listOf(\n        NavItem(stringResource(R.string.nav_proxy), Icons.Default.PowerSettingsNew),\n        NavItem(stringResource(R.string.settings), Icons.Default.Settings),\n        NavItem(stringResource(R.string.nav_logs), Icons.Default.Terminal),\n        NavItem(stringResource(R.string.info), Icons.Default.Info)\n    )''', '''    val navItems = listOf(\n        NavItem(stringResource(R.string.nav_telegram), Icons.Default.PowerSettingsNew),\n        NavItem(stringResource(R.string.nav_youtube), Icons.Default.PlayCircle),\n        NavItem(stringResource(R.string.settings), Icons.Default.Settings),\n        NavItem(stringResource(R.string.nav_logs), Icons.Default.Terminal),\n        NavItem(stringResource(R.string.info), Icons.Default.Info)\n    )''')
+          s = s.replace('''                when (page) {\n                    0 -> ConnectionTab(settingsStore)\n                    1 -> SettingsTab(settingsStore)\n                    2 -> LogsTab(settingsStore)\n                    3 -> InfoTab(settingsStore)\n                }''', '''                when (page) {\n                    0 -> ConnectionTab(settingsStore)\n                    1 -> YouTubeProxyTab(settingsStore)\n                    2 -> SettingsTab(settingsStore)\n                    3 -> LogsTab(settingsStore)\n                    4 -> InfoTab(settingsStore)\n                }''')
+          p.write_text(s)
+
+          p = Path('app/src/main/java/com/amurcanov/tgwsproxy/SettingsStore.kt')
+          s = p.read_text()
+          s = s.replace('''        val SECRET_KEY = stringPreferencesKey("secret_key")\n''', '''        val SECRET_KEY = stringPreferencesKey("secret_key")\n        val YOUTUBE_PROXY_HOST = stringPreferencesKey("youtube_proxy_host")\n        val YOUTUBE_PROXY_PORT = stringPreferencesKey("youtube_proxy_port")\n        val YOUTUBE_PROXY_USERNAME = stringPreferencesKey("youtube_proxy_username")\n        val YOUTUBE_PROXY_PASSWORD = stringPreferencesKey("youtube_proxy_password")\n''')
+          s = s.replace('''    val secretKey: Flow<String> = context.dataStore.data.map { it[Keys.SECRET_KEY] ?: "" }\n''', '''    val secretKey: Flow<String> = context.dataStore.data.map { it[Keys.SECRET_KEY] ?: "" }\n    val youtubeProxyHost: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_HOST] ?: "" }\n    val youtubeProxyPort: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_PORT] ?: "1080" }\n    val youtubeProxyUsername: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_USERNAME] ?: "" }\n    val youtubeProxyPassword: Flow<String> = context.dataStore.data.map { it[Keys.YOUTUBE_PROXY_PASSWORD] ?: "" }\n''')
+          anchor = '''    suspend fun migrateLegacyDefaults() {\n'''
+          method = '''    suspend fun saveYouTubeProxySettings(host: String, port: String, username: String, password: String) {\n        context.dataStore.edit {\n            it[Keys.YOUTUBE_PROXY_HOST] = host.trim()\n            it[Keys.YOUTUBE_PROXY_PORT] = port.trim()\n            it[Keys.YOUTUBE_PROXY_USERNAME] = username\n            it[Keys.YOUTUBE_PROXY_PASSWORD] = password\n        }\n    }\n\n'''
+          if anchor not in s:
+              raise SystemExit('SettingsStore migration anchor not found')
+          s = s.replace(anchor, method + anchor, 1)
+          p.write_text(s)
+
+          p = Path('app/src/main/AndroidManifest.xml')
+          s = p.read_text()
+          s = s.replace('''        <package android:name="org.telegram.messenger" />\n''', '''        <package android:name="org.telegram.messenger" />\n        <package android:name="com.google.android.youtube" />\n''')
+          service_anchor = '''        <service\n            android:name="com.amurcanov.tgwsproxy.ProxyTileService"'''
+          youtube_service = '''        <service\n            android:name="com.amurcanov.tgwsproxy.YouTubeVpnService"\n            android:permission="android.permission.BIND_VPN_SERVICE"\n            android:exported="false"\n            android:stopWithTask="false"\n            android:foregroundServiceType="specialUse">\n            <intent-filter>\n                <action android:name="android.net.VpnService" />\n            </intent-filter>\n            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="YouTube SOCKS5 VPN" />\n        </service>\n\n'''
+          if service_anchor not in s:
+              raise SystemExit('Manifest service anchor not found')
+          s = s.replace(service_anchor, youtube_service + service_anchor, 1)
+          p.write_text(s)
+
+          for path in ['app/src/main/res/values/strings.xml', 'app/src/main/res/values-ru/strings.xml']:
+              p = Path(path)
+              if not p.exists():
+                  continue
+              s = p.read_text()
+              if 'name="nav_youtube"' in s:
+                  continue
+              is_ru = 'values-ru/' in path
+              values = '''\n    <string name="nav_telegram">Telegram</string>\n    <string name="nav_youtube">YouTube</string>\n    <string name="youtube_proxy_title">YouTube Proxy</string>\n    <string name="youtube_proxy_subtitle">SOCKS5 VPN только для приложения YouTube</string>\n    <string name="youtube_proxy_host">SOCKS5 сервер</string>\n    <string name="youtube_proxy_port">Порт</string>\n    <string name="youtube_proxy_username">Логин (необязательно)</string>\n    <string name="youtube_proxy_password">Пароль (необязательно)</string>\n    <string name="youtube_proxy_connect">Подключить</string>\n    <string name="youtube_proxy_disconnect">Отключить</string>\n    <string name="youtube_proxy_open">Открыть YouTube</string>\n    <string name="youtube_proxy_only_youtube">Через VPN проходит только com.google.android.youtube</string>\n    <string name="youtube_proxy_invalid">Укажи сервер и корректный порт</string>\n    <string name="youtube_proxy_not_installed">Официальное приложение YouTube не установлено</string>\n    <string name="youtube_proxy_channel">YouTube Proxy</string>\n    <string name="youtube_proxy_notification">YouTube трафик направляется через SOCKS5</string>\n'''
+              if not is_ru:
+                  values = '''\n    <string name="nav_telegram">Telegram</string>\n    <string name="nav_youtube">YouTube</string>\n    <string name="youtube_proxy_title">YouTube Proxy</string>\n    <string name="youtube_proxy_subtitle">SOCKS5 VPN only for the YouTube app</string>\n    <string name="youtube_proxy_host">SOCKS5 server</string>\n    <string name="youtube_proxy_port">Port</string>\n    <string name="youtube_proxy_username">Username (optional)</string>\n    <string name="youtube_proxy_password">Password (optional)</string>\n    <string name="youtube_proxy_connect">Connect</string>\n    <string name="youtube_proxy_disconnect">Disconnect</string>\n    <string name="youtube_proxy_open">Open YouTube</string>\n    <string name="youtube_proxy_only_youtube">Only com.google.android.youtube is routed through the VPN</string>\n    <string name="youtube_proxy_invalid">Enter a server and a valid port</string>\n    <string name="youtube_proxy_not_installed">Official YouTube app is not installed</string>\n    <string name="youtube_proxy_channel">YouTube Proxy</string>\n    <string name="youtube_proxy_notification">YouTube traffic is routed through SOCKS5</string>\n'''
+              s = s.replace('</resources>', values + '</resources>')
+              p.write_text(s)
+          PY
+
+      - name: Add YouTube proxy controller and VPN service
+        run: |
+          cat > app/src/main/java/com/amurcanov/tgwsproxy/YouTubeProxyController.kt <<'EOF'
+          package com.amurcanov.tgwsproxy
+
+          import android.content.Context
+          import android.content.Intent
+          import androidx.core.content.ContextCompat
+
+          object YouTubeProxyController {
+              fun start(context: Context, host: String, port: Int, username: String, password: String) {
+                  ContextCompat.startForegroundService(
+                      context,
+                      Intent(context, YouTubeVpnService::class.java).apply {
+                          action = YouTubeVpnService.ACTION_START
+                          putExtra(YouTubeVpnService.EXTRA_HOST, host.trim())
+                          putExtra(YouTubeVpnService.EXTRA_PORT, port)
+                          putExtra(YouTubeVpnService.EXTRA_USERNAME, username)
+                          putExtra(YouTubeVpnService.EXTRA_PASSWORD, password)
+                      }
+                  )
+              }
+
+              fun stop(context: Context) {
+                  context.startService(
+                      Intent(context, YouTubeVpnService::class.java).apply {
+                          action = YouTubeVpnService.ACTION_STOP
+                      }
+                  )
+              }
+          }
+          EOF
+
+          cat > app/src/main/java/com/amurcanov/tgwsproxy/YouTubeVpnService.kt <<'EOF'
+          package com.amurcanov.tgwsproxy
+
+          import android.app.Notification
+          import android.app.NotificationChannel
+          import android.app.NotificationManager
+          import android.app.PendingIntent
+          import android.content.Intent
+          import android.content.pm.PackageManager
+          import android.net.VpnService
+          import android.os.Build
+          import android.os.ParcelFileDescriptor
+          import android.util.Log
+          import androidx.core.app.NotificationCompat
+          import cc.hev.socks5.tunnel.HevSocks5Tunnel
+          import cc.hev.socks5.tunnel.TunnelConfig
+          import kotlinx.coroutines.flow.MutableStateFlow
+          import kotlinx.coroutines.flow.asStateFlow
+
+          class YouTubeVpnService : VpnService() {
+              private var tunInterface: ParcelFileDescriptor? = null
+              private var tunnel: HevSocks5Tunnel? = null
+              @Volatile private var stopping = false
+
+              override fun onCreate() {
+                  super.onCreate()
+                  createNotificationChannel()
+              }
+
+              override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+                  when (intent?.action) {
+                      ACTION_START -> {
+                          val host = intent.getStringExtra(EXTRA_HOST).orEmpty().trim()
+                          val port = intent.getIntExtra(EXTRA_PORT, 1080)
+                          val username = intent.getStringExtra(EXTRA_USERNAME).orEmpty()
+                          val password = intent.getStringExtra(EXTRA_PASSWORD).orEmpty()
+                          startForeground(NOTIFICATION_ID, createNotification())
+                          startTunnel(host, port, username, password)
+                      }
+                      ACTION_STOP -> stopTunnel()
+                  }
+                  return START_STICKY
+              }
+
+              private fun startTunnel(host: String, port: Int, username: String, password: String) {
+                  if (_isRunning.value || tunnel != null) return
+                  _lastError.value = ""
+                  stopping = false
+
+                  if (host.isBlank() || port !in 1..65535) {
+                      fail("Invalid SOCKS5 endpoint")
+                      return
+                  }
+
+                  try {
+                      val builder = Builder()
+                          .setSession("YouTube Proxy")
+                          .setMtu(TUN_MTU)
+                          .addAddress("10.11.0.2", 24)
+                          .addRoute("0.0.0.0", 0)
+                          .addDnsServer("1.1.1.1")
+
+                      try {
+                          builder.addAllowedApplication(YOUTUBE_PACKAGE)
+                      } catch (e: PackageManager.NameNotFoundException) {
+                          fail(getString(R.string.youtube_proxy_not_installed))
+                          return
+                      }
+
+                      tunInterface = builder.establish()
+                          ?: throw IllegalStateException("VpnService.Builder.establish() returned null")
+
+                      val configBuilder = TunnelConfig.Builder()
+                          .setSocks5Address(host)
+                          .setSocks5Port(port)
+                          .setTunName("yt0")
+                          .setTunMtu(TUN_MTU)
+                          .setTunIPv4Address("10.11.0.2")
+                          .setTunIPv4Gateway("10.11.0.1")
+                          .setTunIPv6Address(null)
+                          .setTunIPv6Gateway(null)
+                          .setDnsServers(listOf("1.1.1.1", "8.8.8.8"))
+                          .setMultiQueue(2)
+
+                      if (username.isNotEmpty()) configBuilder.setSocks5Username(username)
+                      if (password.isNotEmpty()) configBuilder.setSocks5Password(password)
+
+                      val newTunnel = HevSocks5Tunnel()
+                      newTunnel.startAsync(configBuilder.build(), tunInterface!!.fileDescriptor)
+                      tunnel = newTunnel
+                      _isRunning.value = true
+                      Log.i(TAG, "YouTube SOCKS5 VPN started: $host:$port")
+                  } catch (t: Throwable) {
+                      Log.e(TAG, "Failed to start YouTube VPN", t)
+                      fail(t.message ?: t.javaClass.simpleName)
+                  }
+              }
+
+              private fun fail(message: String) {
+                  _lastError.value = message
+                  cleanup()
+              }
+
+              private fun stopTunnel() {
+                  if (stopping) return
+                  stopping = true
+                  try {
+                      tunnel?.stop()
+                  } catch (t: Throwable) {
+                      Log.w(TAG, "Tunnel stop failed", t)
+                  } finally {
+                      tunnel = null
+                      _isRunning.value = false
+                      cleanup()
+                      stopping = false
+                  }
+              }
+
+              private fun cleanup() {
+                  try { tunInterface?.close() } catch (_: Throwable) {}
+                  tunInterface = null
+                  _isRunning.value = false
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                      stopForeground(STOP_FOREGROUND_REMOVE)
+                  } else {
+                      @Suppress("DEPRECATION") stopForeground(true)
+                  }
+                  stopSelf()
+              }
+
+              override fun onRevoke() {
+                  stopTunnel()
+                  super.onRevoke()
+              }
+
+              override fun onDestroy() {
+                  try { tunnel?.stop() } catch (_: Throwable) {}
+                  tunnel = null
+                  try { tunInterface?.close() } catch (_: Throwable) {}
+                  tunInterface = null
+                  _isRunning.value = false
+                  super.onDestroy()
+              }
+
+              private fun createNotificationChannel() {
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                      getSystemService(NotificationManager::class.java)?.createNotificationChannel(
+                          NotificationChannel(
+                              CHANNEL_ID,
+                              getString(R.string.youtube_proxy_channel),
+                              NotificationManager.IMPORTANCE_LOW
+                          )
+                      )
+                  }
+              }
+
+              private fun createNotification(): Notification {
+                  val pendingIntent = PendingIntent.getActivity(
+                      this,
+                      0,
+                      Intent(this, MainActivity::class.java),
+                      PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                  )
+                  return NotificationCompat.Builder(this, CHANNEL_ID)
+                      .setSmallIcon(android.R.drawable.ic_media_play)
+                      .setContentTitle(getString(R.string.youtube_proxy_title))
+                      .setContentText(getString(R.string.youtube_proxy_notification))
+                      .setContentIntent(pendingIntent)
+                      .setOngoing(true)
+                      .build()
+              }
+
+              companion object {
+                  const val ACTION_START = "com.amurcanov.tgwsproxy.YOUTUBE_PROXY_START"
+                  const val ACTION_STOP = "com.amurcanov.tgwsproxy.YOUTUBE_PROXY_STOP"
+                  const val EXTRA_HOST = "youtube_proxy_host"
+                  const val EXTRA_PORT = "youtube_proxy_port"
+                  const val EXTRA_USERNAME = "youtube_proxy_username"
+                  const val EXTRA_PASSWORD = "youtube_proxy_password"
+                  const val YOUTUBE_PACKAGE = "com.google.android.youtube"
+                  private const val TAG = "YouTubeVpnService"
+                  private const val CHANNEL_ID = "youtube_proxy_v1"
+                  private const val NOTIFICATION_ID = 202
+                  private const val TUN_MTU = 8500
+
+                  private val _isRunning = MutableStateFlow(false)
+                  val isRunning = _isRunning.asStateFlow()
+                  private val _lastError = MutableStateFlow("")
+                  val lastError = _lastError.asStateFlow()
+              }
+          }
+          EOF
+
+      - name: Add YouTube Compose tab
+        run: |
+          cat > app/src/main/java/com/amurcanov/tgwsproxy/ui/YouTubeProxyTab.kt <<'EOF'
+          package com.amurcanov.tgwsproxy.ui
+
+          import android.app.Activity
+          import android.content.Intent
+          import android.net.VpnService
+          import android.widget.Toast
+          import androidx.activity.compose.rememberLauncherForActivityResult
+          import androidx.activity.result.contract.ActivityResultContracts
+          import androidx.compose.foundation.layout.*
+          import androidx.compose.foundation.shape.RoundedCornerShape
+          import androidx.compose.material.icons.Icons
+          import androidx.compose.material.icons.filled.PlayCircle
+          import androidx.compose.material3.*
+          import androidx.compose.runtime.*
+          import androidx.compose.runtime.saveable.rememberSaveable
+          import androidx.compose.ui.Alignment
+          import androidx.compose.ui.Modifier
+          import androidx.compose.ui.platform.LocalContext
+          import androidx.compose.ui.res.stringResource
+          import androidx.compose.ui.text.font.FontWeight
+          import androidx.compose.ui.text.input.PasswordVisualTransformation
+          import androidx.compose.ui.unit.dp
+          import androidx.lifecycle.compose.collectAsStateWithLifecycle
+          import com.amurcanov.tgwsproxy.R
+          import com.amurcanov.tgwsproxy.SettingsStore
+          import com.amurcanov.tgwsproxy.YouTubeProxyController
+          import com.amurcanov.tgwsproxy.YouTubeVpnService
+          import kotlinx.coroutines.launch
+
+          @Composable
+          fun YouTubeProxyTab(settingsStore: SettingsStore) {
+              val context = LocalContext.current
+              val scope = rememberCoroutineScope()
+              val running by YouTubeVpnService.isRunning.collectAsStateWithLifecycle()
+              val lastError by YouTubeVpnService.lastError.collectAsStateWithLifecycle()
+              val savedHost by settingsStore.youtubeProxyHost.collectAsStateWithLifecycle(initialValue = "")
+              val savedPort by settingsStore.youtubeProxyPort.collectAsStateWithLifecycle(initialValue = "1080")
+              val savedUsername by settingsStore.youtubeProxyUsername.collectAsStateWithLifecycle(initialValue = "")
+              val savedPassword by settingsStore.youtubeProxyPassword.collectAsStateWithLifecycle(initialValue = "")
+
+              var host by rememberSaveable(savedHost) { mutableStateOf(savedHost) }
+              var portText by rememberSaveable(savedPort) { mutableStateOf(savedPort) }
+              var username by rememberSaveable(savedUsername) { mutableStateOf(savedUsername) }
+              var password by rememberSaveable(savedPassword) { mutableStateOf(savedPassword) }
+
+              fun startCurrent() {
+                  val port = portText.toIntOrNull()
+                  if (host.isBlank() || port == null || port !in 1..65535) {
+                      Toast.makeText(context, context.getString(R.string.youtube_proxy_invalid), Toast.LENGTH_SHORT).show()
+                      return
+                  }
+                  scope.launch { settingsStore.saveYouTubeProxySettings(host, portText, username, password) }
+                  YouTubeProxyController.start(context, host, port, username, password)
+              }
+
+              val vpnPermissionLauncher = rememberLauncherForActivityResult(
+                  ActivityResultContracts.StartActivityForResult()
+              ) { result ->
+                  if (result.resultCode == Activity.RESULT_OK) startCurrent()
+              }
+
+              Column(
+                  modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
+                  verticalArrangement = Arrangement.spacedBy(12.dp)
+              ) {
+                  Text(
+                      text = stringResource(R.string.youtube_proxy_title),
+                      style = MaterialTheme.typography.titleLarge,
+                      fontWeight = FontWeight.Bold
+                  )
+                  Text(
+                      text = stringResource(R.string.youtube_proxy_subtitle),
+                      style = MaterialTheme.typography.bodyMedium,
+                      color = MaterialTheme.colorScheme.onSurfaceVariant
+                  )
+
+                  AppSectionCard(modifier = Modifier.fillMaxWidth()) {
+                      Column(
+                          modifier = Modifier.fillMaxWidth(),
+                          horizontalAlignment = Alignment.CenterHorizontally,
+                          verticalArrangement = Arrangement.spacedBy(12.dp)
+                      ) {
+                          Icon(
+                              imageVector = Icons.Default.PlayCircle,
+                              contentDescription = null,
+                              modifier = Modifier.size(74.dp),
+                              tint = if (running) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                          )
+                          Text(
+                              text = if (running) stringResource(R.string.status_connected) else stringResource(R.string.status_disconnected),
+                              fontWeight = FontWeight.Bold,
+                              color = if (running) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                          )
+                          if (lastError.isNotBlank() && !running) {
+                              Text(lastError, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                          }
+                      }
+                  }
+
+                  AppSectionCard(modifier = Modifier.fillMaxWidth()) {
+                      Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                          OutlinedTextField(
+                              value = host,
+                              onValueChange = { host = it },
+                              label = { Text(stringResource(R.string.youtube_proxy_host)) },
+                              enabled = !running,
+                              singleLine = true,
+                              modifier = Modifier.fillMaxWidth()
+                          )
+                          OutlinedTextField(
+                              value = portText,
+                              onValueChange = { portText = it.filter(Char::isDigit).take(5) },
+                              label = { Text(stringResource(R.string.youtube_proxy_port)) },
+                              enabled = !running,
+                              singleLine = true,
+                              modifier = Modifier.fillMaxWidth()
+                          )
+                          OutlinedTextField(
+                              value = username,
+                              onValueChange = { username = it },
+                              label = { Text(stringResource(R.string.youtube_proxy_username)) },
+                              enabled = !running,
+                              singleLine = true,
+                              modifier = Modifier.fillMaxWidth()
+                          )
+                          OutlinedTextField(
+                              value = password,
+                              onValueChange = { password = it },
+                              label = { Text(stringResource(R.string.youtube_proxy_password)) },
+                              enabled = !running,
+                              singleLine = true,
+                              visualTransformation = PasswordVisualTransformation(),
+                              modifier = Modifier.fillMaxWidth()
+                          )
+
+                          Button(
+                              onClick = {
+                                  if (running) {
+                                      YouTubeProxyController.stop(context)
+                                  } else {
+                                      val prepareIntent: Intent? = VpnService.prepare(context)
+                                      if (prepareIntent == null) startCurrent() else vpnPermissionLauncher.launch(prepareIntent)
+                                  }
+                              },
+                              modifier = Modifier.fillMaxWidth().height(52.dp),
+                              shape = RoundedCornerShape(24.dp)
+                          ) {
+                              Text(if (running) stringResource(R.string.youtube_proxy_disconnect) else stringResource(R.string.youtube_proxy_connect))
+                          }
+
+                          OutlinedButton(
+                              onClick = {
+                                  val launch = context.packageManager.getLaunchIntentForPackage(YouTubeVpnService.YOUTUBE_PACKAGE)
+                                  if (launch != null) context.startActivity(launch)
+                                  else Toast.makeText(context, context.getString(R.string.youtube_proxy_not_installed), Toast.LENGTH_SHORT).show()
+                              },
+                              modifier = Modifier.fillMaxWidth()
+                          ) {
+                              Text(stringResource(R.string.youtube_proxy_open))
+                          }
+
+                          Text(
+                              text = stringResource(R.string.youtube_proxy_only_youtube),
+                              style = MaterialTheme.typography.bodySmall,
+                              color = MaterialTheme.colorScheme.onSurfaceVariant
+                          )
+                      }
+                  }
+              }
+          }
+          EOF
+
+      - name: Commit integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Add YouTube SOCKS5 VPN tab and service'
+          git push origin feature/youtube-proxy
