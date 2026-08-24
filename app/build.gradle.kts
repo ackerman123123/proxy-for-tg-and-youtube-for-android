@@ -8,6 +8,7 @@ plugins {
 android {
     namespace = "com.amurcanov.tgwsproxy"
     compileSdk = 35
+    ndkVersion = "27.0.12077973"
 
     defaultConfig {
         applicationId = "com.amurcanov.tgwsproxy"
@@ -18,6 +19,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+        externalNativeBuild {
+            ndkBuild {
+                arguments += "NDK_APPLICATION_MK=" +
+                    rootProject.file("third_party/hev-socks5-tunnel/Application.mk").absolutePath
+                // Keep the native library compatible with the app’s minSdk 21 universal APK.
+                arguments += "APP_PLATFORM=android-21"
+            }
         }
     }
 
@@ -59,9 +68,7 @@ android {
         create("release") {
             val keyFile = localProperties.getProperty("KEYSTORE_FILE")
             if (keyFile != null) {
-                // Резолвим путь: если начинается с "..", берём от корня проекта
                 val resolvedFile = if (keyFile.startsWith("..")) {
-                    // ../release.keystore -> корень проекта / release.keystore
                     file(rootDir.resolve(keyFile.substring(3)))
                 } else {
                     file(keyFile)
@@ -72,7 +79,7 @@ android {
                     keyAlias = localProperties.getProperty("KEY_ALIAS")
                     keyPassword = localProperties.getProperty("KEY_PASSWORD")
                 } else {
-                    println("WARNING: Keystore file not found: $keyFile (resolved: ${resolvedFile.absolutePath})")
+                    println("WARNING: Keystore file not found: " + keyFile)
                 }
             }
             enableV1Signing = true
@@ -94,26 +101,32 @@ android {
                 file(rootDir.resolve(keyFile.substring(3)))
             } else if (keyFile != null) {
                 file(keyFile)
-            } else null
-            
+            } else {
+                null
+            }
             if (resolvedFile != null && resolvedFile.exists()) {
                 signingConfig = signingConfigs.getByName("release")
-                println("✅ Signing config applied: ${resolvedFile.absolutePath}")
             } else {
-                println("⚠️ WARNING: Keystore not found, using debug signing")
-                println("   Looked for: ${resolvedFile?.absolutePath ?: keyFile}")
+                println("WARNING: Keystore not found, using debug signing")
             }
         }
     }
+
+    externalNativeBuild {
+        ndkBuild {
+            path = file("../third_party/hev-socks5-tunnel/Android.mk")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
     buildFeatures {
         compose = true
         buildConfig = true
     }
-    // composeOptions removed — AGP 9.x handles Compose compiler internally
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -136,13 +149,11 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-
-    // DataStore for persistent settings
     implementation("androidx.datastore:datastore-preferences:1.1.1")
-
-    // JNA for easy C-shared library calls
     implementation("net.java.dev.jna:jna:5.14.0@aar")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.wireguard.android:tunnel:1.0.20230706")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }

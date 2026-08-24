@@ -1,0 +1,81 @@
+Build commit: 74ebd9ba39401d88dd04ddbdfa4c87bef9d54ed8
+Exit code: 0
+
+===== LAST 350 LINES =====
+
+Welcome to Gradle 9.1.0!
+
+Here are the highlights of this release:
+ - Full Java 25 support
+ - Native task graph visualization
+ - Enhanced console output
+
+For more details see https://docs.gradle.org/9.1.0/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+Calculating task graph as no cached configuration is available for tasks: :app:assembleUniversalDebug
+
+> Configure project :app
+w: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/build.gradle.kts:137:21: 'fun srcDirs(vararg srcDirs: Any): Any' is deprecated. Use `directories` mutable set instead.
+WARNING: Keystore not found, using debug signing
+WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+[CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+[CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:generateUniversalDebugAssets UP-TO-DATE
+> Task :app:preUniversalDebugBuild UP-TO-DATE
+> Task :app:mergeUniversalDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateUniversalDebugBuildConfig
+> Task :app:generateUniversalDebugResources
+> Task :app:packageUniversalDebugResources
+> Task :app:javaPreCompileUniversalDebug
+> Task :app:processUniversalDebugNavigationResources
+> Task :app:mergeUniversalDebugAssets
+> Task :app:compressUniversalDebugAssets
+> Task :app:checkUniversalDebugDuplicateClasses
+> Task :app:mergeLibDexUniversalDebug
+> Task :app:checkUniversalDebugAarMetadata
+> Task :app:compileUniversalDebugNavigationResources
+> Task :app:parseUniversalDebugLocalResources
+> Task :app:mapUniversalDebugSourceSetPaths
+> Task :app:generateUniversalDebugRFile
+> Task :app:mergeUniversalDebugResources
+> Task :app:createUniversalDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksUniversalDebug
+> Task :app:desugarUniversalDebugFileDependencies
+> Task :app:l8DexDesugarLibUniversalDebug
+> Task :app:configureNdkBuildDebug[arm64-v8a]
+> Task :app:compileUniversalDebugKotlin
+> Task :app:processUniversalDebugMainManifest
+> Task :app:mergeExtDexUniversalDebug
+> Task :app:buildNdkBuildDebug[arm64-v8a]
+> Task :app:configureNdkBuildDebug[armeabi-v7a]
+> Task :app:buildNdkBuildDebug[armeabi-v7a]
+> Task :app:mergeUniversalDebugJniLibFolders
+> Task :app:processUniversalDebugManifest
+> Task :app:processUniversalDebugManifestForPackage
+> Task :app:mergeUniversalDebugNativeLibs
+
+> Task :app:stripUniversalDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libjnidispatch.so. Run with --info option to learn more.
+
+> Task :app:validateSigningUniversalDebug
+> Task :app:writeUniversalDebugAppMetadata
+> Task :app:writeUniversalDebugSigningConfigVersions
+> Task :app:processUniversalDebugResources
+> Task :app:processUniversalDebugJavaRes
+> Task :app:mergeUniversalDebugJavaResource
+> Task :app:compileUniversalDebugJavaWithJavac
+> Task :app:dexBuilderUniversalDebug
+> Task :app:mergeUniversalDebugGlobalSynthetics
+> Task :app:mergeProjectDexUniversalDebug
+> Task :app:packageUniversalDebug
+> Task :app:assembleUniversalDebug
+> Task :app:createUniversalDebugApkListingFileRedirect
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1787568712717.json
+
+BUILD SUCCESSFUL in 3m 23s
+43 actionable tasks: 43 executed
+Configuration cache entry stored.

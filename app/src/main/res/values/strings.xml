@@ -127,4 +127,36 @@
     <string name="interval_never">Never</string>
     <string name="interval_hours">%1$d h</string>
     <string name="port_is_not_available">Port %1$d is in use, please try another one</string>
+
+    <string name="nav_telegram">Telegram</string>
+    <string name="nav_youtube">YouTube</string>
+    <string name="youtube_proxy_title">YouTube Proxy</string>
+    <string name="youtube_proxy_subtitle">SOCKS5 VPN only for the YouTube app</string>
+    <string name="youtube_proxy_host">SOCKS5 server</string>
+    <string name="youtube_proxy_port">Port</string>
+    <string name="youtube_proxy_username">Username (optional)</string>
+    <string name="youtube_proxy_password">Password (optional)</string>
+    <string name="youtube_proxy_connect">Connect</string>
+    <string name="youtube_proxy_disconnect">Disconnect</string>
+    <string name="youtube_proxy_open">Open YouTube</string>
+    <string name="youtube_proxy_only_youtube">Only com.google.android.youtube is routed through the VPN</string>
+    <string name="youtube_proxy_invalid">Enter a server and a valid port</string>
+    <string name="youtube_proxy_not_installed">Official YouTube app is not installed</string>
+    <string name="youtube_proxy_channel">YouTube Proxy</string>
+    <string name="youtube_proxy_notification">YouTube traffic is routed through SOCKS5</string>
+
+    <string name="youtube_route_socks5">SOCKS5</string>
+    <string name="youtube_route_wireguard">WireGuard</string>
+    <string name="youtube_wireguard_title">WireGuard tunnel</string>
+    <string name="youtube_wireguard_import">Import .conf</string>
+    <string name="youtube_wireguard_profile">Profile: %1$s</string>
+    <string name="youtube_wireguard_no_profile">No profile imported</string>
+    <string name="youtube_wireguard_delete">Delete profile</string>
+    <string name="youtube_wireguard_storage">The configuration is stored only in the app’s private storage and is not included in the APK.</string>
+    <string name="youtube_wireguard_only_youtube">The imported configuration is automatically limited to YouTube.</string>
+    <string name="youtube_wireguard_imported">WireGuard profile imported</string>
+    <string name="youtube_wireguard_invalid">This file is not a supported WireGuard profile</string>
+    <string name="youtube_wireguard_channel">YouTube WireGuard</string>
+    <string name="youtube_wireguard_notification">YouTube traffic is routed through WireGuard</string>
+    <string name="youtube_wireguard_disconnected">WireGuard tunnel disconnected</string>
 </resources>
