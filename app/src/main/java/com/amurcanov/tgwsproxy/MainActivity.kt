@@ -30,7 +30,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.input.pointer.pointerInput
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PowerSettingsNew
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Settings
@@ -56,7 +55,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amurcanov.tgwsproxy.ui.AppUpdateDialog
 import com.amurcanov.tgwsproxy.ui.ConnectionTab
 import com.amurcanov.tgwsproxy.ui.FloatingToolbar
-import com.amurcanov.tgwsproxy.ui.InfoTab
 import com.amurcanov.tgwsproxy.ui.LogsTab
 import com.amurcanov.tgwsproxy.ui.SettingsTab
 import com.amurcanov.tgwsproxy.ui.YouTubeProxyTab
@@ -190,8 +188,7 @@ fun MainContent(settingsStore: SettingsStore) {
         NavItem(stringResource(R.string.nav_telegram), Icons.Default.PowerSettingsNew),
         NavItem(stringResource(R.string.nav_youtube), Icons.Default.PlayCircle),
         NavItem(stringResource(R.string.settings), Icons.Default.Settings),
-        NavItem(stringResource(R.string.nav_logs), Icons.Default.Terminal),
-        NavItem(stringResource(R.string.info), Icons.Default.Info)
+        NavItem(stringResource(R.string.nav_logs), Icons.Default.Terminal)
     )
     val safeBottomInset = with(density) { WindowInsets.safeDrawing.getBottom(density).toDp() }
     val navOverlayReserve = safeBottomInset + 96.dp
@@ -307,7 +304,6 @@ fun MainContent(settingsStore: SettingsStore) {
                     1 -> YouTubeProxyTab(settingsStore)
                     2 -> SettingsTab(settingsStore)
                     3 -> LogsTab(settingsStore)
-                    4 -> InfoTab(settingsStore)
                 }
             }
 
