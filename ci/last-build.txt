@@ -1,159 +1,83 @@
-Build commit: 4305a715374ab2903cba3be6d03337189147f376
+Build commit: 061c57096256e7f377e6a0386595cb7a5d7e32d8
 Exit code: 1
 
 ===== LAST 350 LINES =====
-Caused by: org.gradle.internal.UncheckedException: com.android.ide.common.process.ProcessException: ninja: Entering directory `/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/.cxx/Debug/2u3i3662/arm64-v8a'
-[1/2] Building C object CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o
-FAILED: CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o 
-/usr/local/lib/android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none-linux-android21 --sysroot=/usr/local/lib/android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot -Dhev_socks5_tunnel_jni_EXPORTS -I/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/../../hev-socks5-tunnel/src -I/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/../../hev-socks5-tunnel/src/core/include -I/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/../../hev-socks5-tunnel/third-part/hev-task-system/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o -MF CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o.d -o CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o -c /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/src/main/cpp/hev_socks5_tunnel_jni.c
-/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/src/main/cpp/hev_socks5_tunnel_jni.c:20:10: fatal error: 'hev-main.h' file not found
-   20 | #include "hev-main.h"
-      |          ^~~~~~~~~~~~
-1 error generated.
-ninja: build stopped: subcommand failed.
 
-C++ build system [build] failed while executing:
-    /usr/local/lib/android/sdk/cmake/3.22.1/bin/ninja \
-      -C \
-      /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/.cxx/Debug/2u3i3662/arm64-v8a \
-      hev-socks5-tunnel-jni
-  from /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library
-	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:69)
-	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:42)
-	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:128)
-	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.doExecute(StandardTaskAction.java:58)
-	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:51)
-	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:29)
-	at org.gradle.api.internal.tasks.execution.TaskExecution$3.run(TaskExecution.java:252)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
-	at org.gradle.api.internal.tasks.execution.TaskExecution.executeAction(TaskExecution.java:237)
-	at org.gradle.api.internal.tasks.execution.TaskExecution.executeActions(TaskExecution.java:220)
-	at org.gradle.api.internal.tasks.execution.TaskExecution.executeWithPreviousOutputFiles(TaskExecution.java:203)
-	at org.gradle.api.internal.tasks.execution.TaskExecution.execute(TaskExecution.java:170)
-	at org.gradle.internal.execution.steps.ExecuteStep.executeInternal(ExecuteStep.java:105)
-	at org.gradle.internal.execution.steps.ExecuteStep.access$000(ExecuteStep.java:44)
-	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:59)
-	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:56)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
-	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
-	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
-	at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
-	at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
-	at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
-	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
-	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
-	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:68)
-	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:38)
-	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
-	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
-	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:69)
-	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:46)
-	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:39)
-	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:28)
-	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
-	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$1(BuildCacheStep.java:75)
-	at org.gradle.internal.Either$Right.fold(Either.java:176)
-	at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
-	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)
-	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)
-	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
-	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
-	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:49)
-	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:27)
-	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:71)
-	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:39)
-	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:64)
-	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:35)
-	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:62)
-	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:40)
-	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:76)
-	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:45)
-	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkStep.java:136)
-	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:61)
-	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:38)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
-	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36)
-	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23)
-	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
-	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:35)
-	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:297)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
-	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
-	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
-	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
-	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
-	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:47)
-	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:34)
-	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:64)
-	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:132)
-	... 29 more
-Caused by: com.android.ide.common.process.ProcessException: ninja: Entering directory `/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/.cxx/Debug/2u3i3662/arm64-v8a'
-[1/2] Building C object CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o
-FAILED: CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o 
-/usr/local/lib/android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none-linux-android21 --sysroot=/usr/local/lib/android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot -Dhev_socks5_tunnel_jni_EXPORTS -I/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/../../hev-socks5-tunnel/src -I/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/../../hev-socks5-tunnel/src/core/include -I/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/../../hev-socks5-tunnel/third-part/hev-task-system/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o -MF CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o.d -o CMakeFiles/hev-socks5-tunnel-jni.dir/src/main/cpp/hev_socks5_tunnel_jni.c.o -c /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/src/main/cpp/hev_socks5_tunnel_jni.c
-/home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/src/main/cpp/hev_socks5_tunnel_jni.c:20:10: fatal error: 'hev-main.h' file not found
-   20 | #include "hev-main.h"
-      |          ^~~~~~~~~~~~
-1 error generated.
-ninja: build stopped: subcommand failed.
+Welcome to Gradle 9.1.0!
 
-C++ build system [build] failed while executing:
-    /usr/local/lib/android/sdk/cmake/3.22.1/bin/ninja \
-      -C \
-      /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/.cxx/Debug/2u3i3662/arm64-v8a \
-      hev-socks5-tunnel-jni
-  from /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library
-	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:288)
-	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:108)
-	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:106)
-	at com.android.build.gradle.internal.cxx.timing.TimingEnvironmentKt.time(TimingEnvironment.kt:32)
-	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess(ExecuteProcess.kt:106)
-	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess$default(ExecuteProcess.kt:85)
-	at com.android.build.gradle.internal.cxx.build.CxxRegularBuilder.executeProcessBatch(CxxRegularBuilder.kt:332)
-	at com.android.build.gradle.internal.cxx.build.CxxRegularBuilder.build(CxxRegularBuilder.kt:129)
-	at com.android.build.gradle.tasks.ExternalNativeBuildTask.doTaskAction(ExternalNativeBuildTask.kt:72)
-	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask$taskAction$$inlined$recordTaskAction$1.invoke(BaseTask.kt:78)
-	at com.android.build.gradle.internal.tasks.Blocks.recordSpan(Blocks.java:51)
-	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask.taskAction(UnsafeOutputsTask.kt:81)
-	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:125)
-	... 117 more
-Caused by: com.android.ide.common.process.ProcessException: Error while executing process /usr/local/lib/android/sdk/cmake/3.22.1/bin/ninja with arguments {-C /home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/third_party/hev-socks5-tunnel-android/library/.cxx/Debug/2u3i3662/arm64-v8a hev-socks5-tunnel-jni}
-	at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
-	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:48)
-	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:277)
-	... 129 more
-Caused by: org.gradle.process.ProcessExecutionException: Process 'command '/usr/local/lib/android/sdk/cmake/3.22.1/bin/ninja'' finished with non-zero exit value 1
-	at org.gradle.process.internal.DefaultExecHandle$ExecResultImpl.assertNormalExitValue(DefaultExecHandle.java:450)
-	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:46)
-	... 130 more
+Here are the highlights of this release:
+ - Full Java 25 support
+ - Native task graph visualization
+ - Enhanced console output
 
-==============================================================================
+For more details see https://docs.gradle.org/9.1.0/release-notes.html
 
-2: Task failed with an exception.
------------
+Starting a Gradle Daemon (subsequent builds will be faster)
+Calculating task graph as no cached configuration is available for tasks: :app:assembleUniversalDebug
+
+> Configure project :app
+w: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/build.gradle.kts:136:21: 'fun srcDirs(vararg srcDirs: Any): Any' is deprecated. Use `directories` mutable set instead.
+WARNING: Keystore not found, using debug signing
+WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+[CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: [CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+[CXX5202] This app only has 32-bit [armeabi-v7a] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :app:generateUniversalDebugAssets UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preUniversalDebugBuild UP-TO-DATE
+> Task :app:mergeUniversalDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateUniversalDebugBuildConfig
+> Task :app:generateUniversalDebugResources
+> Task :app:packageUniversalDebugResources
+> Task :app:javaPreCompileUniversalDebug
+> Task :app:checkUniversalDebugDuplicateClasses
+> Task :app:mergeLibDexUniversalDebug
+> Task :app:processUniversalDebugNavigationResources
+> Task :app:mergeUniversalDebugAssets
+> Task :app:compressUniversalDebugAssets
+> Task :app:checkUniversalDebugAarMetadata
+> Task :app:compileUniversalDebugNavigationResources
+> Task :app:mapUniversalDebugSourceSetPaths
+> Task :app:createUniversalDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksUniversalDebug
+> Task :app:parseUniversalDebugLocalResources
+> Task :app:generateUniversalDebugRFile
+> Task :app:processUniversalDebugMainManifest
+> Task :app:processUniversalDebugManifest
+> Task :app:processUniversalDebugManifestForPackage
+> Task :app:mergeUniversalDebugResources
+> Task :app:configureNdkBuildDebug[arm64-v8a]
+> Task :app:desugarUniversalDebugFileDependencies
+> Task :app:buildNdkBuildDebug[arm64-v8a]
+> Task :app:configureNdkBuildDebug[armeabi-v7a]
+> Task :app:compileUniversalDebugKotlin
+> Task :app:processUniversalDebugResources
+> Task :app:mergeExtDexUniversalDebug
+> Task :app:buildNdkBuildDebug[armeabi-v7a]
+> Task :app:mergeUniversalDebugJniLibFolders
+> Task :app:mergeUniversalDebugNativeLibs
+> Task :app:validateSigningUniversalDebug
+> Task :app:writeUniversalDebugAppMetadata
+> Task :app:writeUniversalDebugSigningConfigVersions
+
+> Task :app:stripUniversalDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libjnidispatch.so. Run with --info option to learn more.
+
+> Task :app:compileUniversalDebugKotlin FAILED
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:119:13 Unresolved reference 'ServerSocket'.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:119:13 Argument type mismatch: actual type is 'R (of fun <T : Closeable?, R> T.use)', but 'K (of fun <K> TRY_CALL)' was expected.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:119:28 Cannot infer type for this parameter. Specify it explicitly.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:119:34 Cannot infer type for this parameter. Specify it explicitly.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:120:24 Unresolved reference 'reuseAddress'.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:121:24 Unresolved reference 'bind'.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:121:29 Unresolved reference 'InetSocketAddress'.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:121:47 Unresolved reference 'InetAddress'.
+e: file:///home/runner/work/proxy-for-tg-and-youtube-for-android/proxy-for-tg-and-youtube-for-android/app/src/main/java/com/amurcanov/tgwsproxy/ProxyService.kt:126:13 Argument type mismatch: actual type is 'Nothing', but 'K (of fun <K> TRY_CALL)' was expected.
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/build-1787563998614.json
+
+FAILURE: Build failed with an exception.
+
 * What went wrong:
 Execution failed for task ':app:compileUniversalDebugKotlin'.
 > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
@@ -198,9 +122,6 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:com
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:840)
 Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
 	at org.gradle.workers.internal.DefaultWorkerExecutor$WorkItemExecution.waitForCompletion(DefaultWorkerExecutor.java:289)
 	at org.gradle.internal.work.DefaultAsyncWorkTracker.lambda$waitForItemsAndGatherFailures$2(DefaultAsyncWorkTracker.java:130)
@@ -253,7 +174,6 @@ Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionExcept
 	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
 	at org.gradle.internal.execution.steps.BuildCacheStep.executeAndStoreInCache(BuildCacheStep.java:145)
 	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$executeWithCache$4(BuildCacheStep.java:101)
-	at java.base/java.util.Optional.orElseGet(Optional.java:364)
 	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$executeWithCache$5(BuildCacheStep.java:101)
 	at org.gradle.internal.Try$Success.map(Try.java:170)
 	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithCache(BuildCacheStep.java:85)
@@ -266,7 +186,6 @@ Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionExcept
 	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
-	at java.base/java.util.Optional.orElseGet(Optional.java:364)
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
 	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
 	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
@@ -296,7 +215,6 @@ Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionExcept
 	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
 	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
 	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
-	at java.base/java.util.Optional.orElseGet(Optional.java:364)
 	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
 	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
 	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
@@ -305,7 +223,7 @@ Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionExcept
 	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:34)
 	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:64)
 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:132)
-	... 32 more
+	... 29 more
 Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilation error. See log for more details
 	at org.jetbrains.kotlin.gradle.tasks.TasksUtilsKt.throwExceptionIfCompilationFailed(tasksUtils.kt:21)
 	at org.jetbrains.kotlin.compilerRunner.GradleKotlinCompilerWork.run(GradleKotlinCompilerWork.kt:119)
@@ -327,7 +245,6 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	at org.gradle.workers.internal.AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)
 	at org.gradle.workers.internal.NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:59)
 	at org.gradle.workers.internal.DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:176)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
 	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:194)
 	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:127)
 	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:169)
@@ -337,18 +254,9 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:132)
 	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:164)
 	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:133)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	... 5 more
+	... 2 more
 
-==============================================================================
 
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
-
-You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
-
-For more on this, please refer to https://docs.gradle.org/9.1.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
-
-BUILD FAILED in 2m 43s
-42 actionable tasks: 42 executed
+BUILD FAILED in 3m 26s
+34 actionable tasks: 34 executed
 Configuration cache entry stored.
